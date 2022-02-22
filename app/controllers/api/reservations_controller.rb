@@ -7,10 +7,10 @@ class Api::ReservationsController < ApplicationController
     if parsed_response.success?
       reservation_params = parsed_response.response[:reservation]
       f_reservation = Reservation.find_by(code: reservation_params[:code])
+      guest_params = parsed_response.response[:guest]
       @guest = if f_reservation
                 f_reservation.guest
               else
-                guest_params = parsed_response.response[:guest]
                 Guest.find_or_create_by!(email: guest_params[:email])
               end
 

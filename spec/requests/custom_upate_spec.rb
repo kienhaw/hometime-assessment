@@ -48,6 +48,27 @@ RSpec.describe Api::ReservationsController do
         expect(Guest.first.first_name).to eq guest_hash[:first_name]
       end
     end
+
+    context 'when updating record' do
+      let(:date_to_update) { "2021-05-14" }
+
+      before do
+        Guest.create(guest_hash)
+        Reservation.create(reservation_hash.merge(guest: Guest.first))
+        reservation_hash[:start_date] = date_to_update
+        service_result = double("ParseResponseService")
+        expect(ParseResponseService).to receive(:new).with(any_args).and_return(service_result)
+        expect(service_result).to receive(:call).and_return(double(success?: true, response: { reservation: reservation_hash, guest: guest_hash } ))
+      end
+
+      it 'should create reservation and guest successfully' do
+        expect(Reservation.first.start_date.to_s).to eq "2021-04-14"
+        post '/api/reservations/update', params: {}
+        expect(response.code).to eq '200'
+        expect(json["message"]).to eq 'OK'
+        expect(Reservation.first.start_date.to_s).to eq date_to_update
+      end
+    end
   end
 end
 
