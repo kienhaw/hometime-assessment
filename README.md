@@ -3,22 +3,36 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-Things you may want to cover:
+##### Prerequisites
 
-* Ruby version
+The setups steps expect following tools installed on the system.
 
-* System dependencies
+- Github
+- Ruby [2.7.4](https://github.com/kienhaw/hometime-assessment/blob/master/.ruby-version#L4)
+- Rails [6.1.3](https://github.com/kienhaw/hometime-assessment/blob/master/Gemfile#L7)
+- Database: [PostgresQL 13](https://github.com/kienhaw/hometime-assessment/blob/master/config/database.yml#L18)
 
-* Configuration
+##### 1. Check out the repository
 
-* Database creation
+```bash
+git clone https://{{username}}@github.com/kienhaw/hometime-assessment.git
+```
 
-* Database initialization
+##### 2. Create and setup the database
 
-* How to run the test suite
+Run the following commands to create and setup the database.
 
-* Services (job queues, cache servers, search engines, etc.)
+```ruby
+bundle exec rake db:create
+bundle exec rake db:setup
+```
 
-* Deployment instructions
+##### 3. Start the Rails server
 
-* ...
+You can start the rails server using the command given below.
+
+```ruby
+bundle exec rails s
+```
+
+And now you can visit the site with the URL http://localhost:3000
